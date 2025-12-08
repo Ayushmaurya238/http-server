@@ -1,3 +1,4 @@
+
 # 🚀 Custom HTTP Server (Python)
 
 This project is a custom HTTP/1.1 server implemented from scratch in Python as part of the CodeCrafters **HTTP Server Challenge**.
@@ -16,7 +17,7 @@ The server handles routing, persistent connections, header parsing, file I/O, an
 - Handles malformed or premature connection closures gracefully
 ---
 #### ✔ Endpoints Implemented
-1. GET `/`
+1. **GET** `/`
 Returns a basic HTTP 200 OK with an empty body.
 ```http
 GET / HTTP/1.1
@@ -27,7 +28,7 @@ Content-Length: 0
 
 ---
 
-2. GET `/echo/<string>`
+2. **GET** `/echo/<string>`
 
 Returns the string back in the response body.
 
@@ -45,7 +46,7 @@ Headers included:
 
 ---
 
-3. GET /user-agent
+3. **GET** /user-agent
 
 Returns the value of the `User-Agent` header sent by the client.
 
@@ -59,7 +60,7 @@ User-Agent: mango/banana
 
 ---
 
-4. GET `/files/<filename>`
+4. **GET** `/files/<filename>`
 
 Reads a file from a directory provided via:
 ```bash
@@ -73,7 +74,7 @@ Responds with:
 
 ---
 
-5. POST `/files/<filename>`
+5. **POST** `/files/<filename>`
 
 Creates or overwrites a file inside the provided directory.
 
@@ -86,7 +87,7 @@ HTTP/1.1 201 Created
 ```
 ---
 
-#### ✔ Gzip Compression (Accept-Encoding: gzip)
+#### ✔ Gzip Compression (`Accept-Encoding: gzip`)
 
 Your server supports gzip compression on:
 - `/echo/<string>`
@@ -139,7 +140,7 @@ Your server:
 ```pgsql
 Connection: close
 ```
-- Closes the TCP connection after responding
+- Closes the **TCP connection** after responding
 - Does not process additional requests on that connection (even if pipelined)
 
 #### ✔ Thread-per-Connection Model
@@ -166,25 +167,25 @@ This allows the server to act as a basic file-hosting endpoint.
 ---
 
 #### 📜 Example Usage
-Echo endpoint
+**Echo endpoint**
 ```bash
 curl http://localhost:4221/echo/blueberry
 ```
-Gzip response
+**Gzip response**
 ```bash
 curl -H "Accept-Encoding: gzip" http://localhost:4221/echo/strawberry --output -
 ```
-User-Agent reflection
+**User-Agent reflection**
 ```bash
 curl http://localhost:4221/user-agent -H "User-Agent: grape/mango"
 ```
-Persistent connections
+**Persistent connections**
 ```bash
 curl --http1.1 -v http://localhost:4221/echo/apple \
      --next http://localhost:4221/user-agent -H "User-Agent: mango/orange"
 ```
 
-File upload
+**File upload**
 ```bash
 echo "hello file" | curl -X POST --data-binary @- http://localhost:4221/files/a.txt
 ```
